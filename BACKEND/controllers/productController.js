@@ -8,3 +8,17 @@ exports.getProducts = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getProductById = async (req, res) => {
+  try {
+
+    const id = req.params.id;
+
+    const product = await productService.getProductById(id);
+
+    res.json(product);
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
