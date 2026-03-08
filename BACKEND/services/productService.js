@@ -12,7 +12,7 @@ exports.getProducts = async (query) => {
 
     let request = supabase
         .from("products")
-        .select("id,name,price", { count: "exact", head: false });
+        .select("id,name,price,image_url,category,brand,description", { count: "exact", head: false });
 
     if (search) {
         request = request.ilike("name", `%${search}%`);
@@ -31,4 +31,17 @@ exports.getProducts = async (query) => {
         limit,
         total: count
     };
+};
+
+exports.getProductById = async (id) => {
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("id", id)
+    .single();
+
+  if (error) throw error;
+
+  return data;
 };
